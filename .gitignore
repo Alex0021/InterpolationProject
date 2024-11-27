@@ -33,4 +33,7 @@
 
 # CMake
 build/
-external/
+
+# VSCode
+.vscode/
+*.code-workspace
