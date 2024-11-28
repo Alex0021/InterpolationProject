@@ -5,6 +5,6 @@
 class DataReader {
 
 public:
-    static std::pair<Eigen::Matrix<double, -1, -1>, Eigen::Matrix<double, -1, 1>> read(std::filesystem::path& filepath);
-
+    template <typename T>
+    static std::pair<Eigen::MatrixX<T>, Eigen::VectorX<T> > read(std::filesystem::path& filepath);
 };
