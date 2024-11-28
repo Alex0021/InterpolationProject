@@ -4,7 +4,7 @@ project (Interpolation-Project)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCES "src/main.cc" "src/DataReader.cpp")
+set(SOURCES "src/main.cpp" "src/DataReader.cpp")
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
@@ -27,7 +27,7 @@ include_directories(external/eigen include/)
 add_executable(main ${SOURCES})
 
 # Define tests
-add_executable(test_pcsc test/test.cc)
+add_executable(test_pcsc test/test.cpp)
 target_link_libraries(test_pcsc gtest_main gtest pthread)
 
 add_custom_target(test ./test_pcsc DEPENDS test_pcsc)
