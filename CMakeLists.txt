@@ -4,7 +4,7 @@ project (Interpolation-Project)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCES "src/main.cpp" "src/DataReader.cpp")
+set(SOURCES "src/main.cpp" "src/data_reader.cpp" "src/polynomial_interpolator.cpp")
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    

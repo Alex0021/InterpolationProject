@@ -1,4 +1,4 @@
-#include "DataReader.hpp"
+#include "data_reader.hpp"
 
 template <typename T>
 std::pair<Eigen::MatrixX<T>, Eigen::VectorX<T> > DataReader::read(std::filesystem::path& filepath) {
