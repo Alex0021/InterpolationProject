@@ -1,14 +1,26 @@
 #include "data_reader.hpp"
+#include <fstream>
+#include <filesystem>
 
 template <typename T>
-std::pair<Eigen::MatrixX<T>, Eigen::VectorX<T> > DataReader::read(std::filesystem::path& filepath) {
-    Eigen::MatrixX<T> X;
-    Eigen::VectorX<T> y;
-    return std::make_pair(X, y);
+Eigen::MatrixX<T> DataReader::read(std::filesystem::path path) {
+    std::ifstream file(path);
+
+    int rows, cols;
+    file >> rows >> cols;
+
+    Eigen::MatrixX<T> data(rows, cols);
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            T value;
+            file >> value;
+            data(i, j) = value;
+        }
+    }
+
+    return data;
 }
 
-// Explicit instantiation of templating 
-template std::pair<Eigen::MatrixX<double>, Eigen::VectorX<double> > DataReader::read<double>(std::filesystem::path& filepath);
-template std::pair<Eigen::MatrixX<float>, Eigen::VectorX<float> > DataReader::read<float>(std::filesystem::path& filepath);
-template std::pair<Eigen::MatrixX<int>, Eigen::VectorX<int> > DataReader::read<int>(std::filesystem::path& filepath);
-
+template Eigen::MatrixX<double> DataReader::read<double>(std::filesystem::path path);
+template Eigen::MatrixX<float> DataReader::read<float>(std::filesystem::path path);
+template Eigen::MatrixX<int> DataReader::read<int>(std::filesystem::path path);

@@ -4,7 +4,7 @@ project (Interpolation-Project)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCES "src/main.cpp" "src/data_reader.cpp" "src/polynomial_interpolator.cpp")
+set(SOURCES "src/main.cpp" "src/data_reader.cpp" "src/polynomial_interpolator.cpp" "src/datagen.cpp")
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
@@ -31,3 +31,17 @@ add_executable(test_pcsc test/test.cpp)
 target_link_libraries(test_pcsc gtest_main gtest pthread)
 
 add_custom_target(test ./test_pcsc DEPENDS test_pcsc)
+
+# GNU PLOT
+# find dependencies (Boost)
+find_package(Boost REQUIRED COMPONENTS
+    iostreams system filesystem
+)
+# adds the search path for includes
+include_directories(gnuplot-iostream)
+# adds linked libraries to produce executable
+target_link_libraries(main PRIVATE
+    Boost::iostreams
+    Boost::system
+    Boost::filesystem
+)

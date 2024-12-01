@@ -37,3 +37,6 @@ build/
 # VSCode
 .vscode/
 *.code-workspace
+
+# Data
+data/*
