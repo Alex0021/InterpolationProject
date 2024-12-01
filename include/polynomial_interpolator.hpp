@@ -20,15 +20,13 @@
 template <typename T>
 class PolynomialInterpolator: public Interpolator<T> {
 
-    private:
-
+    protected:
         /* Matrix of NxM datapoints */
         Eigen::MatrixX<T> _X_data;
         /* Vector of Nx1 datapoitns for fitting */
         Eigen::VectorX<T> _y_data;
 
     public: 
-
         /**
          * @brief Getter for the X datapoints matrix 
          *

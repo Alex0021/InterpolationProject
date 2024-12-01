@@ -4,6 +4,9 @@ template <typename T>
 T LagrangeInterpolator<T>::lagrange_basis(unsigned int i, const Eigen::VectorX<T>& x_interpolation) {}
 
 template <typename T>
+T LagrangeInterpolator<T>::lagrange_basis(unsigned int i, T x_interpolation) {}
+
+template <typename T>
 LagrangeInterpolator<T>::LagrangeInterpolator() {}
 
 template <typename T>
