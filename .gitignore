@@ -39,4 +39,6 @@ build/
 *.code-workspace
 
 # Data
-data/*
+data/
+
+docs/

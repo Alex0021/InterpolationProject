@@ -10,11 +10,11 @@ set(SOURCES "src/main.cpp" "src/data_reader.cpp" "src/polynomial_interpolator.cp
 set(GIT_EXECUTABLE "git")    
 option(GIT_SUBMODULE "Check submodules during build" ON)
 if(GIT_SUBMODULE)
-  message(STATUS "Submodule update")
-  execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
-  if(NOT GIT_SUBMOD_RESULT EQUAL "0")
-    message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
-  endif()
+execute_process(COMMAND ${GIT_EXECUTABLE} submodule update --init --recursive WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} RESULT_VARIABLE GIT_SUBMOD_RESULT)
+if(NOT GIT_SUBMOD_RESULT EQUAL "0")
+message(FATAL_ERROR "git submodule update --init --recursive failed with ${GIT_SUBMOD_RESULT}, please checkout submodules")
+endif()
+message(STATUS "Submodule update done")
 endif(GIT_SUBMODULE)
 
 # Add subfolders to project (with CMakeLists.txt file)
@@ -32,16 +32,35 @@ target_link_libraries(test_pcsc gtest_main gtest pthread)
 
 add_custom_target(test ./test_pcsc DEPENDS test_pcsc)
 
-# GNU PLOT
-# find dependencies (Boost)
+#GNU PLOT
+#find dependencies (Boost)
 find_package(Boost REQUIRED COMPONENTS
-    iostreams system filesystem
+   iostreams system filesystem
 )
-# adds the search path for includes
+#adds the search path for includes
 include_directories(gnuplot-iostream)
-# adds linked libraries to produce executable
+#adds linked libraries to produce executable
 target_link_libraries(main PRIVATE
-    Boost::iostreams
-    Boost::system
-    Boost::filesystem
+   Boost::iostreams
+   Boost::system
+   Boost::filesystem
 )
+
+
+# Doxygen
+option(GENERATE_DOC "Generate documentation with Doxygen" ON)
+if(GENERATE_DOC)
+    find_package(Doxygen)
+    if(DOXYGEN_FOUND)
+        set(DOXYGEN_OUT ${CMAKE_CURRENT_SOURCE_DIR}/Doxyfile)
+        add_custom_target(doc
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM
+        )
+        message(STATUS "Doxygen documentation done")
+    else(DOXYGEN_FOUND)
+        message("Doxygen need to be installed to generate the doxygen documentation")
+    endif(DOXYGEN_FOUND)
+endif(GENERATE_DOC)
