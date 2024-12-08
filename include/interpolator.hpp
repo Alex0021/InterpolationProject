@@ -8,8 +8,11 @@
  * @copyright Copyright (c) 2024
  * 
  */
+#ifndef __INTERPOLATOR_INCLUDE
+#define __INTERPOLATOR_INCLUDE
 
 #include <Eigen/Core>
+
 
 /**
  * @brief Interpolator abstract class definition contains necessary 
@@ -49,3 +52,5 @@ class Interpolator {
         virtual Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) = 0;
 
 };
+
+#endif

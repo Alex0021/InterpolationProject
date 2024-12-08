@@ -9,6 +9,9 @@
  * 
  */
 
+#ifndef __POLYNOMIAL_INTERPOLATOR_INCLUDE
+#define __POLYNOMIAL_INTERPOLATOR_INCLUDE
+
 #include "interpolator.hpp"
 
 /**
@@ -51,3 +54,5 @@ class PolynomialInterpolator: public Interpolator<T> {
 
         Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
 };
+
+#endif

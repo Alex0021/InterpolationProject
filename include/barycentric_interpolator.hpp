@@ -1,3 +1,6 @@
+#ifndef __BARYCENTRIC_INTERPOLATOR_INCLUDE
+#define __BARYCENTRIC_INTERPOLATOR_INCLUDE
+
 #include "Eigen/Core"
 #include "polynomial_interpolator.hpp"
 
@@ -53,3 +56,5 @@ class BarycentricInterpolator: public PolynomialInterpolator<T>
 
         BarycentricInterpolator<T>& operator<<(Eigen::VectorX<T> x);
 };
+
+#endif

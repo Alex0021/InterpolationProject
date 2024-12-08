@@ -11,6 +11,9 @@
 #include "Eigen/Core"
 #include "polynomial_interpolator.hpp"
 
+#ifndef __LAGRANGE_INTERPOLATOR_INCLUDE
+#define __LAGRANGE_INTERPOLATOR_INCLUDE
+
 /**
  * @brief  Class implementing the Lagrange interpolation scheme
  *
@@ -48,3 +51,5 @@ class LagrangeInterpolator: public PolynomialInterpolator<T> {
 
         Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
 };
+
+#endif
