@@ -7,7 +7,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(SOURCES "src/main.cpp"
             "src/data_reader.cpp"
             "src/polynomial_interpolator.cpp" 
-            #"src/datagen.cpp" 
+            "src/datagen.cpp" 
             "src/lagrange_interpolator.cpp"
             "src/barycentric_interpolator.cpp"
             "src/cubic_spline_interpolator.cpp"
