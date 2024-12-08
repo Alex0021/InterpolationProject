@@ -9,7 +9,9 @@ set(SOURCES "src/main.cpp"
             "src/polynomial_interpolator.cpp" 
             #"src/datagen.cpp" 
             "src/lagrange_interpolator.cpp"
-            "src/barycentric_interpolator.cpp")
+            "src/barycentric_interpolator.cpp"
+            "src/cubic_spline_interpolator.cpp"
+            "src/chebychev_interpolator.cpp")
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
