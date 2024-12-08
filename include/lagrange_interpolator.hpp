@@ -24,18 +24,10 @@ class LagrangeInterpolator: public PolynomialInterpolator<T> {
 
     private:
         /**
-         * @brief Calculate basis value for datapoint i considering given 2D interpolation point x 
-         * \f[
+         * @brief Generic implementation of lagrange_basis function for an m-dimensional datapoint
+         *\f[
          *      l_i(x) = \prod_{j,j \neq i}^{n} \frac{x-x_j}{x_i-x_j}
          * \f]
-         * @param i Index of the basis function (refers to datapoint x_i)  
-         * @param x_interpolation The currently interpolated 2D datapoint x
-         * @return T Value of the i-th polynomial evaluated @x
-         */
-        T lagrange_basis(unsigned int i, T x_interpolation);
-
-        /**
-         * @brief Generic implementation of lagrange_basis function for an m-dimensional datapoint
          * 
          * @param i Index of the basis function (refers to datapoint x_i) 
          * @param x_interpolation m-dimensional interpolation point x

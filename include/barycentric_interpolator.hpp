@@ -53,8 +53,6 @@ class BarycentricInterpolator: public PolynomialInterpolator<T>
         void fit(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y) override;
 
         Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
-
-        BarycentricInterpolator<T>& operator<<(Eigen::VectorX<T> x);
 };
 
 #endif
