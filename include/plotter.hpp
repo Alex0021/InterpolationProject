@@ -12,6 +12,8 @@
 #include <string>
 #include "data_reader.hpp"
 #include <Eigen/Core>
+#include <vector>
+#include <tuple>
 
 /**
  * @brief 
@@ -23,6 +25,8 @@ class Plotter {
 
 private:
 
+    Gnuplot gp;
+
     struct PlotterParams {
         std::string title = NULL;
         std::string xlabel = "x";
@@ -30,30 +34,27 @@ private:
         std::string zlabel = "z";
     };;
 
-    /**
-     * @brief plot the data from a given text file
-     * @param filename 
-     */
-    void _plot_from_file(std::string filename);
+    void _plot_from_file(std::filesystem::path path);
+
+    void _plot(Eigen::MatrixX2<T> &data);
 
 public:
 
     Plotter();
     ~Plotter();
     
-    /**
-     * @brief 
-     * 
-     * @param filename plot the data from a given text file
-     */
-    void plot(std::string filename);
+    void plot(std::filesystem::path path);
 
     /**
      * @brief 
      * 
      * @param data plot the data from a matrix. The dependent variable is the last column of the matrix.
      */
-    void plot(Eigen::MatrixX<T> data);
+    void plot(Eigen::MatrixX<T> &data);
+    
+    void plot(Eigen::MatrixX2<T> &data);
+    
+    void plot(Eigen::MatrixX2<T> &point_data, Eigen::MatrixX2<T> &line_data);
 
     /**
      * @brief 
@@ -63,15 +64,15 @@ public:
      */
     void plot(Eigen::MatrixX<T> data, int dim);
 
-    void plot(std::VectorX<T> x, std::VectorX<T> y);
+    void plot(Eigen::VectorX<T> x, Eigen::VectorX<T> y);
 
-    void plot(std::VectorX<T> x, std::VectorX<T> y, std::VectorX<T> z);
+    void plot(Eigen::VectorX<T> x, Eigen::VectorX<T> y, Eigen::VectorX<T> z);
 
     void reset();
 
     void show();
 
-    void save(std::string filename);
+    void save(std::filesystem::path path);
 
     // Setters =========================================================================================================
 
