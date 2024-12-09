@@ -70,7 +70,11 @@ class PolynomialInterpolator: public Interpolator<T> {
 
         void fit(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y) override;
 
-        virtual Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X);
+        virtual Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
+
+        virtual Eigen::VectorX<T> operator()(const Eigen::VectorX<T>& x) override;
+
+        virtual T operator()(T x) override;
 };
 
 #endif
