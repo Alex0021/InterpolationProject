@@ -40,6 +40,20 @@ void datagen<T>::polynomial(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &coeffs,
 }
 
 template <typename T>
+void datagen<T>::damped_cosine(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &params, std::pair<T, T> range, datagen<T>::PointGeneration pg) {
+    int n = data.rows();
+    Eigen::VectorX<T> x(n);
+    datagen<T>::generate_points(x, range, pg);
+    Eigen::VectorX<T> y(n);
+    T a = params[0];
+    T b = params[1];
+    T c = params[2];
+    // y = a*(-b*x.cwisePow(2)).cwiseExp().cwiseProduct((c*x.array().cwiseCos()));
+    data.col(0) = x;
+    data.col(1) = y;
+}
+
+template <typename T>
 void datagen<T>::generate_points(Eigen::VectorX<T> &x, std::pair<T, T> range, datagen<T>::PointGeneration pg) {
     int n = x.rows();
     switch (pg) {
