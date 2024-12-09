@@ -37,6 +37,10 @@ struct datagen {
 
     static void generate_points(Eigen::VectorX<T> &x, std::pair<T, T> range, PointGeneration pg);
 
+    static void chebyshev_points(Eigen::VectorX<T> &x, std::pair<T, T> range);
+
+    static void damped_cosine(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &params, std::pair<T, T> range, PointGeneration pg);
+
 };
 
 #endif
