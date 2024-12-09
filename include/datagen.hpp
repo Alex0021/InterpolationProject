@@ -1,7 +1,14 @@
 #include <Eigen/Core>
 #include <fstream>
+#include <filesystem>
+#include <vector>
+#include <utility>
 
-namespace datagen {
+#ifndef DATAGEN_HPP 
+#define DATAGEN_HPP
+
+template <typename T>
+struct datagen {
     /**
      * @brief 
      * 
@@ -11,9 +18,25 @@ namespace datagen {
      * @param m number of features
      * @param degree degree of the polynomial
      */
-    template <typename T>
-    void random_polynomial(std::filesystem::path path, int n, int m, int degree);
 
-    template <typename T>
-    void random_data(std::filesystem::path path, int n, int m);
-}
+    enum class PointGeneration {
+        RANDOM_UNIFORM,
+        CHEBYSHEV,
+        UNIFORM,
+    };
+
+    static void random_data(std::filesystem::path path, int n, int m);
+
+    static void polynomial(Eigen::MatrixX<T> &data, Eigen::VectorX<T> &coeffs, std::vector<std::pair<T, T>> range, PointGeneration pg);
+    
+    static void polynomial(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &coeffs, std::pair<T, T> range, PointGeneration pg);
+    
+    static void polynomial(Eigen::VectorX<T> &data, Eigen::VectorX<T> &x, Eigen::VectorX<T> &coeffs);
+    
+    static void chebyshev_polynomial(Eigen::VectorX<T> &data, int d, std::pair<T, T> range, PointGeneration pg);
+
+    static void generate_points(Eigen::VectorX<T> &x, std::pair<T, T> range, PointGeneration pg);
+
+};
+
+#endif
