@@ -26,8 +26,19 @@ class PolynomialInterpolator: public Interpolator<T> {
     protected:
         /* Matrix of NxM datapoints */
         Eigen::MatrixX<T> _X_data;
+
         /* Vector of Nx1 datapoitns for fitting */
         Eigen::VectorX<T> _y_data;
+
+        /* Stores the lower bound of the range */
+        Eigen::VectorX<T> _X_min;
+
+        /* Stores the upper bound of the range */
+        Eigen::VectorX<T> _X_max;
+
+    private:
+        /* Calculates the interpolation interval based on fitted X */
+        void calculate_range();
 
     public: 
         /**
@@ -44,6 +55,13 @@ class PolynomialInterpolator: public Interpolator<T> {
         const Eigen::VectorX<T>& get_y_data() const;
 
         /**
+         * @brief Get the possible interpolation range as a pair [low,high]
+         * 
+         * @return const std::pair<Eigen::VectorX<T>&, Eigen::VectorX<T>&> range[lower,upper]
+         */
+        std::tuple<Eigen::VectorX<T>, Eigen::VectorX<T>> get_range() const;
+
+        /**
          * @brief Construct a new Polynomial Interpolator object
          */
         PolynomialInterpolator();
@@ -52,7 +70,7 @@ class PolynomialInterpolator: public Interpolator<T> {
 
         void fit(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y) override;
 
-        Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) = 0;
+        virtual Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X);
 };
 
 #endif

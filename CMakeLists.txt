@@ -4,8 +4,7 @@ project (Interpolation-Project)
 
 set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCES "src/main.cpp"
-            "src/data_reader.cpp"
+set(SOURCES "src/data_reader.cpp"
             "src/polynomial_interpolator.cpp" 
             "src/datagen.cpp" 
             "src/lagrange_interpolator.cpp"
@@ -30,14 +29,14 @@ add_subdirectory(external/googletest)
 include_directories(external/eigen include/)
 
 # Define targets
-add_executable(main ${SOURCES})
+add_executable(main "src/main.cpp" ${SOURCES})
 
 # Define tests
 
-add_executable(tests test/lagrange_interpolator_tests.cpp
-            src/polynomial_interpolator.cpp
-            src/lagrange_interpolator.cpp)
-target_link_libraries(tests gtest_main gtest)
+add_executable(tests test/test_polynomial_interpolator.cpp
+                test/test_lagrange_interpolator.cpp
+                ${SOURCES})
+target_link_libraries(tests gtest_main gtest pthread)
 
 add_custom_target(test ./tests DEPENDS tests)
 
