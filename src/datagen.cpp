@@ -61,13 +61,22 @@ void datagen<T>::generate_points(Eigen::VectorX<T> &x, std::pair<T, T> range, da
             x = Eigen::VectorX<T>::Random(n, 1);
             break;
         case datagen<T>::PointGeneration::CHEBYSHEV:
-            throw std::invalid_argument("Chebyshev not implemented");
+            datagen<T>::chebyshev_points(x, range);
             break;
         case datagen<T>::PointGeneration::UNIFORM:
             x = Eigen::VectorX<T>::LinSpaced(n, range.first, range.second);
             break;
         default:
             throw std::invalid_argument("Invalid PointGeneration");
+    }
+}
+
+template <typename T>
+void datagen<T>::chebyshev_points(Eigen::VectorX<T> &x, std::pair<T, T> range) {
+    int n = x.rows();
+    // TODO: verify this implementation
+    for (int i = 0; i < n; i++) {
+        x[i] = 0.5*(range.first + range.second) + 0.5*(range.second - range.first)*cos(M_PI*(2*i + 1)/(2*n));
     }
 }
 
