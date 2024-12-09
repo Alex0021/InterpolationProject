@@ -82,6 +82,16 @@ class InterpolationProjectException: public CustomException {
                 MultidimensionalImplementation(const std::string& msg)
                     : CustomException(msg) {}
         };
+
+        class Extrapolation: public CustomException
+        {
+            public: 
+                Extrapolation(const std::string& msg, const std::string& where)
+                    : CustomException(msg, where) {}
+
+                Extrapolation(const std::string& msg)
+                    : CustomException(msg) {} 
+        };
 };
 
 /**
