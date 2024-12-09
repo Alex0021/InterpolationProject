@@ -42,3 +42,5 @@ build/
 data/
 
 docs/
+*.DS_Store
+external/doxygen-1.12.0
