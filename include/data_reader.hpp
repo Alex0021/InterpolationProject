@@ -1,5 +1,6 @@
 #include <Eigen/Core>
 #include <filesystem>
+#include <fstream>
 
 namespace DataReader {
     template <typename T>

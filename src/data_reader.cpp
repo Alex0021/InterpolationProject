@@ -1,6 +1,4 @@
 #include "data_reader.hpp"
-#include <fstream>
-#include <filesystem>
 
 template <typename T>
 Eigen::MatrixX<T> DataReader::read(std::filesystem::path path) {
@@ -17,7 +15,6 @@ Eigen::MatrixX<T> DataReader::read(std::filesystem::path path) {
             data(i, j) = value;
         }
     }
-
     return data;
 }
 
