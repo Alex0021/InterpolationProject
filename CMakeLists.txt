@@ -9,7 +9,9 @@ set(SOURCES "src/data_reader.cpp"
             "src/datagen.cpp" 
             "src/lagrange_interpolator.cpp"
             "src/barycentric_interpolator.cpp"
-            "src/cubic_spline_interpolator.cpp")
+            "src/cubic_spline_interpolator.cpp"
+            "src/chebychev_interpolator.cpp"
+            "src/plotter.cpp")
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
@@ -42,10 +44,9 @@ add_custom_target(test ./tests DEPENDS tests)
 
 #GNU PLOT
 #find dependencies (Boost)
-find_package(Boost REQUIRED COMPONENTS
-   iostreams system filesystem
-)
-
+find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
+#adds the search path for includes
+include_directories(external/gnuplot-iostream)
 #adds linked libraries to produce executable
 target_link_libraries(main PRIVATE
    Boost::iostreams
