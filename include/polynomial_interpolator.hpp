@@ -38,7 +38,7 @@ class PolynomialInterpolator: public Interpolator<T> {
 
     private:
         /* Calculates the interpolation interval based on fitted X */
-        void calculate_range();
+        void _calculate_range();
 
     public: 
         /**

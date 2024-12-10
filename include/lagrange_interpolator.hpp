@@ -30,7 +30,7 @@ class LagrangeInterpolator: public PolynomialInterpolator<T> {
          * @param x_interpolation m-dimensional interpolation point x
          * @return T Value of the i-th polynomial evaluated @x
          */
-        T lagrange_basis(unsigned int i, const Eigen::VectorX<T>& x_interpolation);
+        T _lagrange_basis(unsigned int i, const Eigen::VectorX<T>& x_interpolation);
 
         /**
          * @brief 2D specific version of to compute lagrange basis l_i : 
@@ -42,7 +42,7 @@ class LagrangeInterpolator: public PolynomialInterpolator<T> {
          * @param x_interpolation 1-dimensional interpolation point x
          * @return T Value of the i-th polynomial evaluated @x
          */
-        T lagrange_basis(unsigned int i, T x_interpolation);
+        T _lagrange_basis(unsigned int i, T x_interpolation);
 
     public:
         /**

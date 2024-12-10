@@ -1,15 +1,14 @@
 #include "lagrange_interpolator.hpp"
 #include "project_exceptions.hpp"
-#include "logger.hpp"
 
 template <typename T>
-T LagrangeInterpolator<T>::lagrange_basis(unsigned int i, const Eigen::VectorX<T>& x_interpolation) 
+T LagrangeInterpolator<T>::_lagrange_basis(unsigned int i, const Eigen::VectorX<T>& x_interpolation) 
 {
     throw LagrangeInterpolatorException::MultidimensionalImplementation("M dimension interpolation is not yet implemented :/ Please try later!");
 }
 
 template <typename T>
-T LagrangeInterpolator<T>::lagrange_basis(unsigned int i, T x_interpolation) 
+T LagrangeInterpolator<T>::_lagrange_basis(unsigned int i, T x_interpolation) 
 {
     Eigen::MatrixX<T> X = this->get_X_data();
     // Checking for only 1D datapoints in X
@@ -86,7 +85,7 @@ T LagrangeInterpolator<T>::operator()(T x)
     T y_m = 0;
     for (unsigned int i=0; i<this->get_X_data().rows(); i++)
     {
-        y_m += this->lagrange_basis(i, x)*this->get_y_data()(i);
+        y_m += this->_lagrange_basis(i, x)*this->get_y_data()(i);
     }
     return y_m;
 }

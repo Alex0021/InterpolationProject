@@ -37,7 +37,7 @@ void PolynomialInterpolator<T>::fit(const Eigen::MatrixX<T>& X, unsigned int dim
     this->_y_data = X.col(dim_idx);
 
     // Update data range
-    this->calculate_range();
+    this->_calculate_range();
 }
 
 template <typename T>
@@ -52,11 +52,11 @@ void PolynomialInterpolator<T>::fit(const Eigen::MatrixX<T>& X, const Eigen::Vec
     this->_y_data = y;
 
     // Update data range
-    this->calculate_range();
+    this->_calculate_range();
 }
 
 template <typename T>
-void PolynomialInterpolator<T>::calculate_range()
+void PolynomialInterpolator<T>::_calculate_range()
 {
     this->_X_max = Eigen::VectorX<T>(this->_X_data.cols());
     this->_X_min = Eigen::VectorX<T>(this->_X_data.cols());
