@@ -26,7 +26,7 @@ endif(GIT_SUBMODULE)
 add_subdirectory(external/googletest)
 
 # Add include_directories for compilation (header & lib files)
-include_directories(external/eigen include/)
+include_directories(external/eigen include/ external/gnu-iostream)
 
 # Define targets
 add_executable(main "src/main.cpp" ${SOURCES})
@@ -45,8 +45,7 @@ add_custom_target(test ./tests DEPENDS tests)
 find_package(Boost REQUIRED COMPONENTS
    iostreams system filesystem
 )
-#adds the search path for includes
-include_directories(gnuplot-iostream)
+
 #adds linked libraries to produce executable
 target_link_libraries(main PRIVATE
    Boost::iostreams
