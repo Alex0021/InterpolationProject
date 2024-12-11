@@ -53,14 +53,6 @@ class LagrangeInterpolator: public PolynomialInterpolator<T> {
         Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
 
         /**
-         * @brief Interpolates the given 1D datapoints
-         * 
-         * @param x N datapoints of 1D
-         * @return Eigen::VectorX<T> N interpolated function values @x
-         */
-        Eigen::VectorX<T> operator()(const Eigen::VectorX<T>& x);
-
-        /**
          * @brief Interpolates a single 1D datapoint
          * 
          * @param x 1D datapoint

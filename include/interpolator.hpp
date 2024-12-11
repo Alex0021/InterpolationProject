@@ -52,15 +52,6 @@ class Interpolator {
         virtual Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) = 0;
 
         /**
-         * @brief Interpolate the given 1 datapoint of vector X (M dim) with the fitted model 
-         * or the N datapoints of 1D in vector X
-         * 
-         * @param x Datapoints to be interpolated
-         * @return Eigen::VectorX<T> Interpolated points
-         */
-        virtual Eigen::VectorX<T> operator()(const Eigen::VectorX<T>& x) = 0;
-
-        /**
          * @brief Interpolate the single 1D datapoint given
          * 
          * @param x Datapoint to be interpolated

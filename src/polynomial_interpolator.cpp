@@ -2,28 +2,6 @@
 #include "project_exceptions.hpp"
 #include <tuple>
 
-
-template <typename T>
-PolynomialInterpolator<T>::PolynomialInterpolator() {}
-
-template <typename T>
-Eigen::VectorX<T> PolynomialInterpolator<T>::operator()(const Eigen::MatrixX<T>& X) 
-{
-    throw std::runtime_error("Operator() for PolynomialInterpolator baseclass should never be called!");
-}
-
-template <typename T>
-Eigen::VectorX<T> PolynomialInterpolator<T>::operator()(const Eigen::VectorX<T>& x) 
-{
-    throw std::runtime_error("Operator() for PolynomialInterpolator baseclass should never be called!");
-}
-
-template <typename T>
-T PolynomialInterpolator<T>::operator()(T x) 
-{
-    throw std::runtime_error("Operator() for PolynomialInterpolator baseclass should never be called!");
-}
-
 template <typename T>
 void PolynomialInterpolator<T>::fit(const Eigen::MatrixX<T>& X, unsigned int dim_idx)
 {

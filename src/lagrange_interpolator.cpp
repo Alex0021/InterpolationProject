@@ -45,29 +45,19 @@ LagrangeInterpolator<T>::LagrangeInterpolator() {}
 template <typename T>
 Eigen::VectorX<T> LagrangeInterpolator<T>::operator()(const Eigen::MatrixX<T>& X) 
 {
-    throw LagrangeInterpolatorException::MultidimensionalImplementation("M dimension interpolation is not yet implemented :/ Please try later!", __func__);
-}
-
-template <typename T>
-Eigen::VectorX<T> LagrangeInterpolator<T>::operator()(const Eigen::VectorX<T>& x)
-{
-    // 2 cases: 
-    //  1- Vectors of n 1D points to be evaluated
-    //  2- One datapoint of M dimension
-
-    if (this->get_X_data().cols() > 1)
+    // Check if multidimensional
+    if (X.cols() > 1)
     {
-        // Multidimensional case
         throw LagrangeInterpolatorException::MultidimensionalImplementation("M dimension interpolation is not yet implemented :/ Please try later!", __func__);
     }
     else
     {
         // Unidimensional case
-        Eigen::VectorX<T> y_out(x.rows());
-        for (unsigned int m=0; m<x.rows(); m++)
+        Eigen::VectorX<T> y_out(X.rows());
+        for (unsigned int m=0; m<X.rows(); m++)
         {
             // Call the already implemented 1D 1 datapoint operator()
-            y_out(m) = this->operator()(x(m));
+            y_out(m) = this->operator()(X(m,0));
         }
         return y_out;
     }
