@@ -1,9 +1,13 @@
 #include "data_reader.hpp"
 
 template <typename T>
-Eigen::MatrixX<T> DataReader::read(std::filesystem::path path) {
+static Eigen::MatrixX<T> DataReader<T>::read(std::filesystem::path path) {
     std::ifstream file(path);
+    return DataReader<T>::read(file);
+}
 
+template <typename T>
+static Eigen::MatrixX<T> DataReader<T>::read(std::ifstream &file) {
     int rows, cols;
     file >> rows >> cols;
 
@@ -15,9 +19,10 @@ Eigen::MatrixX<T> DataReader::read(std::filesystem::path path) {
             data(i, j) = value;
         }
     }
+    file.close();
     return data;
 }
 
-template Eigen::MatrixX<double> DataReader::read<double>(std::filesystem::path path);
-template Eigen::MatrixX<float> DataReader::read<float>(std::filesystem::path path);
-template Eigen::MatrixX<int> DataReader::read<int>(std::filesystem::path path);
+template class DataReader<double>;
+template class DataReader<float>;
+template class DataReader<int>; 
