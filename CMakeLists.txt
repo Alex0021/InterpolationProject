@@ -13,7 +13,7 @@ set(SOURCES "src/data_reader.cpp"
             "src/chebychev_interpolator.cpp"
             "src/plotter.cpp"
             "src/fourier_approximator.cpp"
-            )
+)
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
@@ -38,7 +38,9 @@ add_executable(main "src/main.cpp" ${SOURCES})
 # Define tests
 
 add_executable(tests
+                test/test_polynomial_interpolator.cpp
                 test/test_lagrange_interpolator.cpp
+                test/test_cubic_spline_interpolator.cpp
                 ${SOURCES})
 target_link_libraries(tests gtest_main gtest pthread Boost::iostreams Boost::system Boost::filesystem)
 
