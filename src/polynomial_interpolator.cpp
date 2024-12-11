@@ -1,6 +1,5 @@
 #include "polynomial_interpolator.hpp"
 #include "project_exceptions.hpp"
-#include <tuple>
 
 template <typename T>
 void PolynomialInterpolator<T>::fit(const Eigen::MatrixX<T>& X, unsigned int dim_idx)
@@ -59,9 +58,9 @@ const Eigen::VectorX<T>& PolynomialInterpolator<T>::get_y_data() const
 }
 
 template <typename T>
-std::tuple<Eigen::VectorX<T>, Eigen::VectorX<T>> PolynomialInterpolator<T>::get_range() const
+std::pair<Eigen::VectorX<T>, Eigen::VectorX<T>> PolynomialInterpolator<T>::get_range() const
 {
-    return std::make_tuple(this->_X_min, this->_X_max);
+    return std::make_pair(this->_X_min, this->_X_max);
 }
 
 template class PolynomialInterpolator<int>;
