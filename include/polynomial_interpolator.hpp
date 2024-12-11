@@ -36,7 +36,6 @@ class PolynomialInterpolator: public Interpolator<T> {
         /* Stores the upper bound of the range */
         Eigen::VectorX<T> _X_max;
 
-    private:
         /* Calculates the interpolation interval based on fitted X */
         void _calculate_range();
 
@@ -59,7 +58,7 @@ class PolynomialInterpolator: public Interpolator<T> {
          * 
          * @return const std::pair<Eigen::VectorX<T>&, Eigen::VectorX<T>&> range[lower,upper]
          */
-        std::tuple<Eigen::VectorX<T>, Eigen::VectorX<T>> get_range() const;
+        std::pair<Eigen::VectorX<T>, Eigen::VectorX<T>> get_range() const;
 
         void fit(const Eigen::MatrixX<T>& X, unsigned int dim_idx) override;
 

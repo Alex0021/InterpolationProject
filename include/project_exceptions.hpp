@@ -1,6 +1,7 @@
 #include <exception>
 #include <string>
 #include <format>
+#include <tuple>
 
 #ifndef __PROJECT_EXCEPTIONS_INCLUDE
 #define __PROJECT_EXCEPTIONS_INCLUDE
@@ -91,6 +92,10 @@ class InterpolationProjectException: public CustomException {
 
                 Extrapolation(const std::string& msg)
                     : CustomException(msg) {} 
+
+                Extrapolation(double value_error, double min, double max, const std::string& where)
+                    : CustomException(std::format("Cannot perform extrapolation! Value {} is out of range [{} , {}]",
+                                            value_error, min, max), where) {}
         };
 
         class InvalidType: public CustomException
