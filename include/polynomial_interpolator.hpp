@@ -20,7 +20,7 @@
  *
  * @tparam T Datatype to be used (int, float, double)
  */
-template <typename T>
+template <typename T> 
 class PolynomialInterpolator: public Interpolator<T> {
 
     protected:
@@ -61,6 +61,12 @@ class PolynomialInterpolator: public Interpolator<T> {
          */
         std::tuple<Eigen::VectorX<T>, Eigen::VectorX<T>> get_range() const;
 
+        /**
+         * @brief Construct a new Polynomial Interpolator object
+         */
+        PolynomialInterpolator() = default;
+        ~PolynomialInterpolator() = default;
+
         void fit(const Eigen::MatrixX<T>& X, unsigned int dim_idx) override;
 
         void fit(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y) override;
@@ -68,6 +74,7 @@ class PolynomialInterpolator: public Interpolator<T> {
         virtual Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) = 0;
 
         virtual T operator()(T x) = 0;
+
 };
 
 #endif

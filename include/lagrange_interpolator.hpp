@@ -58,7 +58,7 @@ class LagrangeInterpolator: public PolynomialInterpolator<T> {
          * @param x 1D datapoint
          * @return T interpolated function values @ x
          */
-        T operator()(T x);
+        T operator()(T x) override;
 };
 
 #endif
