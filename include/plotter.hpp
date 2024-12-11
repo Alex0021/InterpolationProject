@@ -14,6 +14,8 @@
 #include <Eigen/Core>
 #include <vector>
 #include <tuple>
+#include <filesystem>
+#include <format>
 
 /**
  * @brief 
@@ -32,11 +34,10 @@ private:
         std::string xlabel = "x";
         std::string ylabel = "y";
         std::string zlabel = "z";
-    };;
+    };
 
     void _plot_from_file(std::filesystem::path path);
 
-    void _plot(const Eigen::MatrixX2<T> &data);
 
 public:
 
@@ -44,6 +45,8 @@ public:
     ~Plotter();
     
     void plot(std::filesystem::path path);
+
+    void _plot(const Eigen::MatrixX2<T> &data);
 
     /**
      * @brief 
@@ -54,7 +57,11 @@ public:
     
     void plot(const Eigen::MatrixX2<T> &data);
     
+    void plot(const Eigen::MatrixX2<T> &data, std::string title);
+
     void plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data);
+
+    void plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data, std::string title);
 
     /**
      * @brief 
@@ -87,5 +94,8 @@ public:
     void set_labels(std::string xlabel, std::string ylabel, std::string zlabel);
 
     void set_labels(std::string xlabel, std::string ylabel);
+
+    void operator<<(const std::string& cmd);
+
 
 };
