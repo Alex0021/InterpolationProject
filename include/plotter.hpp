@@ -36,7 +36,7 @@ private:
 
     void _plot_from_file(std::filesystem::path path);
 
-    void _plot(Eigen::MatrixX2<T> &data);
+    void _plot(const Eigen::MatrixX2<T> &data);
 
 public:
 
@@ -50,11 +50,11 @@ public:
      * 
      * @param data plot the data from a matrix. The dependent variable is the last column of the matrix.
      */
-    void plot(Eigen::MatrixX<T> &data);
+    void plot(const Eigen::MatrixX<T> &data);
     
-    void plot(Eigen::MatrixX2<T> &data);
+    void plot(const Eigen::MatrixX2<T> &data);
     
-    void plot(Eigen::MatrixX2<T> &point_data, Eigen::MatrixX2<T> &line_data);
+    void plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data);
 
     /**
      * @brief 
@@ -62,11 +62,11 @@ public:
      * @param data 
      * @param dim : Dimension of the dependent variable of the data. If dim=1 and data has 2 columns (x,y), then we plot y=f(x). Whereas if dim=0, we plot x=f(y).
      */
-    void plot(Eigen::MatrixX<T> data, int dim);
+    void plot(const Eigen::MatrixX<T> &data, int dim);
 
-    void plot(Eigen::VectorX<T> x, Eigen::VectorX<T> y);
+    void plot(const Eigen::VectorX<T> &x, const Eigen::VectorX<T> &y);
 
-    void plot(Eigen::VectorX<T> x, Eigen::VectorX<T> y, Eigen::VectorX<T> z);
+    void plot(const Eigen::VectorX<T> &x, const Eigen::VectorX<T> &y, const Eigen::VectorX<T> &z);
 
     void reset();
 
