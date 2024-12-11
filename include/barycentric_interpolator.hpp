@@ -21,7 +21,7 @@ class BarycentricInterpolator: public PolynomialInterpolator<T>
          * @param j column (dimension) index for the weight matrix (if m>1)
          * @return calculated weight for x_ij
          */
-        T barycentric_weight(unsigned int i, unsigned int j);
+        T _barycentric_weight(unsigned int i, unsigned int j);
 
         /** @brief Compute the weights defined as follow (2D):
          * \f[
@@ -30,7 +30,7 @@ class BarycentricInterpolator: public PolynomialInterpolator<T>
          * @param i row index for the weight matrix
          * @return calculated weight for x_ij
          */
-        T barycentric_weight(unsigned int i);
+        T _barycentric_weight(unsigned int i);
 
     public:
 
@@ -53,6 +53,8 @@ class BarycentricInterpolator: public PolynomialInterpolator<T>
         void fit(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y) override;
 
         Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
+
+        T operator()(T X) override;
 };
 
 #endif
