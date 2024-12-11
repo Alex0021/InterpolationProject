@@ -13,7 +13,7 @@ template <typename T>
 class BarycentricInterpolator: public PolynomialInterpolator<T>
 {
     private:
-        Eigen::MatrixX<T> weights;
+        Eigen::MatrixX<T> _weights;
 
         /**
          * @brief Compute the weight i,j for the multidemnsional case (m>1)
@@ -45,8 +45,17 @@ class BarycentricInterpolator: public PolynomialInterpolator<T>
          *  Recomputes only the necessary weights
          * 
          * @param X new datapoints to be added
+         * @param y corresponding interpolation values
          */
-        void add_data(Eigen::MatrixX<T> X);
+        void add_data(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y);
+
+        /**
+         * @brief Adds a single new datapoint (1D) to the interpolation
+         * 
+         * @param x datapoint to add
+         * @param y function value @x
+         */
+        void add_data(T x, T y);
 
         void fit(const Eigen::MatrixX<T>& X, unsigned int dim) override;
 

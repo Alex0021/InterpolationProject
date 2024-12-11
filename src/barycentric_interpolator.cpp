@@ -22,7 +22,7 @@ T BarycentricInterpolator<T>::_barycentric_weight(unsigned int i)
     // Loop through all xj (j!=i)
     T xi = this->_X_data(i,0);
     T  wi = 1;
-    for (unsigned int j=0; j<i; j++)
+    for (unsigned int j=0; j<this->_X_data.rows(); j++)
     {
         if (j == i) { continue; }
         T xj = this->_X_data(j,0);
@@ -36,16 +36,22 @@ T BarycentricInterpolator<T>::_barycentric_weight(unsigned int i)
 }
 
 template <typename T>
-void BarycentricInterpolator<T>::add_data(Eigen::MatrixX<T> X)
+void BarycentricInterpolator<T>::add_data(const Eigen::MatrixX<T>& X, const Eigen::VectorX<T>& y)
 {
     if (X.cols() > 1)
     {
         throw BarycentricInterpolatorException::MultidimensionalImplementation("No multidimensional support yet for barycentric interpolation!", __func__);
     }
+    // Extends existing data
+    Eigen::MatrixX<T> new_X_data(this->_X_data.rows() + X.rows(), this->_X_data.cols());
+    Eigen::VectorX<T> new_y_data(this->_y_data.rows() + y.rows());
+    new_X_data << this->_X_data, X;
+    new_y_data << this->_y_data, y;
+
     // 1D case
     // First update all previous weights
-    Eigen::MatrixX<T> new_weights(this->weights.rows() + X.rows(), this->weights.cols());
-    for (unsigned int i=0; i<this->weights.rows();i++)
+    Eigen::MatrixX<T> new_weights(this->_weights.rows() + X.rows(), this->_weights.cols());
+    for (unsigned int i=0; i<this->_weights.rows();i++)
     {
         T new_wi=1;
         for (unsigned int k=0; k<X.rows(); k++)
@@ -56,22 +62,75 @@ void BarycentricInterpolator<T>::add_data(Eigen::MatrixX<T> X)
                 throw BarycentricInterpolatorException::DivisionByZero("Cannot add an already existing interpolation datapoint!", __func__);
             }
         }
-        new_weights(i,0) = this->weights(i,0) / new_wi;
+        new_weights(i,0) = this->_weights(i,0) / new_wi;
     }
-
     // Second compute new weights w_k
-    for (unsigned int k=0; k<X.rows(); k++)
+    for (unsigned int k= this->_X_data.rows()-1; k<new_X_data.rows(); k++)
     {
         T new_wi=1;
-        for (unsigned int i=0; i<X.rows(); i++)
+        for (unsigned int i=0; i<new_X_data.rows(); i++)
         {
-            new_wi *= (this->_X_data(i,0) - X(k,0));
-            if (new_wi == 0)
+            if (i != k)
             {
-                throw BarycentricInterpolatorException::DivisionByZero("Cannot add an already existing interpolation datapoint!", __func__);
+                new_wi *= (new_X_data(k,0) - new_X_data(i,0));
+                if (new_wi == 0)
+                {
+                    throw BarycentricInterpolatorException::DivisionByZero("Cannot add an already existing interpolation datapoint!", __func__);
+                }
             }
         }
+        new_weights(k,0) = 1 / new_wi;
     }
+
+    // Sets new data
+    this->_X_data = new_X_data;
+    this->_y_data = new_y_data;
+    this->_weights = new_weights;
+
+    // Readjust range
+    this->_calculate_range();
+}
+
+template <typename T>
+void BarycentricInterpolator<T>::add_data(T x, T y)
+{
+    // Add new values to X and y data
+    Eigen::MatrixX<T> new_X_data(this->_X_data.rows() + 1, this->_X_data.cols());
+    Eigen::VectorX<T> new_y_data(this->_y_data.rows() + 1);
+    new_X_data << this->_X_data, x;
+    new_y_data << this->_y_data, y;
+
+    // First update all previous weights
+    Eigen::MatrixX<T> new_weights(this->_weights.rows() + 1, this->_weights.cols());
+    for (unsigned int i=0; i<this->_weights.rows();i++)
+    {
+        T new_wi = this->_X_data(i,0) - x;
+        if (new_wi == 0)
+        {
+            throw BarycentricInterpolatorException::DivisionByZero("Cannot add an already existing interpolation datapoint!", __func__);
+        }
+        new_weights(i,0) = this->_weights(i,0) / new_wi;
+    }
+
+    // Second compute new weight w_k
+    T new_wi=1;
+    for (unsigned int i=0; i<this->_X_data.rows(); i++)
+    {
+        new_wi *= (x - this->_X_data(i,0));
+        if (new_wi == 0)
+        {
+            throw BarycentricInterpolatorException::DivisionByZero("Cannot add an already existing interpolation datapoint!", __func__);
+        }
+    }
+    new_weights(Eigen::placeholders::last, 0) = 1 / new_wi;
+
+    // Sets new data
+    this->_X_data = new_X_data;
+    this->_y_data = new_y_data;
+    this->_weights = new_weights;
+
+    // Readjust range
+    this->_calculate_range();
 }
 
 template <typename T>
@@ -80,16 +139,16 @@ void BarycentricInterpolator<T>::fit(const Eigen::MatrixX<T>& X, unsigned int di
     // Store datapoints
     PolynomialInterpolator<T>::fit(X, dim);
     // Compute the weights
-    if (X.cols() > 1)
+    if (this->_X_data.cols() > 1)
     {
         throw BarycentricInterpolatorException::MultidimensionalImplementation("No multidimensional support yet for barycentric interpolation!", __func__);
     }
     else
     {   
-        this->weights = Eigen::MatrixX<T>(X.rows(),1);
-        for (unsigned int i=0; i<X.rows(); i++)
+        this->_weights = Eigen::MatrixX<T>(this->_X_data.rows(),1);
+        for (unsigned int i=0; i<this->_X_data.rows(); i++)
         {
-            weights(i,0) = this->_barycentric_weight(i);
+            this->_weights(i,0) = this->_barycentric_weight(i);
         }
     }
 }
@@ -106,10 +165,10 @@ void BarycentricInterpolator<T>::fit(const Eigen::MatrixX<T>& X, const Eigen::Ve
     }
     else
     {
-        this->weights = Eigen::MatrixX<T>(X.rows(),1);
+        this->_weights = Eigen::MatrixX<T>(X.rows(),1);
         for (unsigned int i=0; i<X.rows(); i++)
         {
-            weights(i,0) = this->_barycentric_weight(i);
+            _weights(i,0) = this->_barycentric_weight(i);
         }
     }
 }
@@ -138,6 +197,12 @@ Eigen::VectorX<T> BarycentricInterpolator<T>::operator()(const Eigen::MatrixX<T>
 template <typename T>
 T BarycentricInterpolator<T>::operator()(T x) 
 {
+    // Check if x within the interpolation range
+    if (x > this->_X_max(0) || x < this->_X_min(0))
+    {
+        throw BarycentricInterpolatorException::Extrapolation(x, this->_X_min(0), this->_X_max(0), __func__);
+    }
+
     T weighted_sum=0, sum=0;
     T intermediate = 0;
     for (unsigned int j=0; j<this->_X_data.rows(); j++) 
@@ -149,7 +214,7 @@ T BarycentricInterpolator<T>::operator()(T x)
             sum = 1;
             break;
         }
-        intermediate = this->weights(j,0) / (x - this->_X_data(j,0));
+        intermediate = this->_weights(j,0) / (x - this->_X_data(j,0));
         sum += intermediate;
         weighted_sum += intermediate * this->_y_data(j);
     }
