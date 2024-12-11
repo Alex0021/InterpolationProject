@@ -92,6 +92,19 @@ class InterpolationProjectException: public CustomException {
                 Extrapolation(const std::string& msg)
                     : CustomException(msg) {} 
         };
+
+        class DivisionByZero: public CustomException {
+
+            public:
+                DivisionByZero(const std::string& msg)
+                    : CustomException(msg) {}
+
+                DivisionByZero(const std::string& msg, const std::string& where)
+                    : CustomException(msg, where) {}
+
+                DivisionByZero()
+                    : CustomException("Division by zero!") {}
+        };
 };
 
 /**
@@ -107,20 +120,10 @@ class PolynomialInterpolatorException: public InterpolationProjectException
  */
 class LagrangeInterpolatorException: public InterpolationProjectException
 {
-    public:
-        class DivisionByZero: public CustomException {
-            std::string msg;
+};
 
-            public:
-                DivisionByZero(const std::string& msg)
-                    : CustomException(msg) {}
-
-                DivisionByZero(const std::string& msg, const std::string& where)
-                    : CustomException(msg, where) {}
-
-                DivisionByZero()
-                    : CustomException("Division by zero while calculating basis functions!") {}
-        };
+class BarycentricInterpolatorException: public InterpolationProjectException
+{
 };
 
 #endif
