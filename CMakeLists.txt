@@ -35,10 +35,10 @@ add_executable(main "src/main.cpp" ${SOURCES})
 
 # Define tests
 
-add_executable(tests test/test_polynomial_interpolator.cpp
+add_executable(tests
                 test/test_lagrange_interpolator.cpp
                 ${SOURCES})
-target_link_libraries(tests gtest_main gtest pthread)
+target_link_libraries(tests gtest_main gtest pthread Boost::iostreams Boost::system Boost::filesystem)
 
 add_custom_target(test ./tests DEPENDS tests)
 
@@ -49,9 +49,9 @@ find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
 include_directories(external/gnuplot-iostream)
 #adds linked libraries to produce executable
 target_link_libraries(main PRIVATE
-   Boost::iostreams
-   Boost::system
-   Boost::filesystem
+Boost::iostreams
+Boost::system
+Boost::filesystem
 )
 
 
