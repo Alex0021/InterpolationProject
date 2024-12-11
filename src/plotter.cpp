@@ -20,8 +20,21 @@ void Plotter<T>::plot(const Eigen::MatrixX2<T> &data) {
 }
 
 template <typename T>
+void Plotter<T>::plot(const Eigen::MatrixX2<T> &data, std::string title) {
+    this->gp << std::format("plot '-' with lines title '{}'\n", title);
+    _plot(data);
+}
+
+template <typename T>
 void Plotter<T>::plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data) {
-    this->gp << "plot '-' with points, '-' with lines\n";
+    this->gp << "plot '-' with points title 'Data', '-' with lines title 'Interpolated'\n";
+    _plot(point_data);
+    _plot(line_data);
+}
+
+template <typename T>
+void Plotter<T>::plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data, std::string title) {
+    this->gp << std::format("plot '-' with points title 'Data', '-' with lines title '{}'\n", title);
     _plot(point_data);
     _plot(line_data);
 }
@@ -37,6 +50,11 @@ void Plotter<T>::_plot(const Eigen::MatrixX2<T> &data) {
     Eigen::VectorX<T> x = data.col(0);
     Eigen::VectorX<T> y = data.col(1);
     this->gp.send1d(std::make_tuple(x, y));
+}
+
+template <typename T>
+void Plotter<T>::operator<<(const std::string& cmd) {
+    this->gp << cmd;
 }
 
 template class Plotter<double>;

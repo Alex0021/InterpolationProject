@@ -26,6 +26,8 @@ class Interpolator {
 
     public:
 
+    virtual ~Interpolator() = default;
+
         /**
          * @brief Fits an interpolator model from the provided datapoints
          * 
