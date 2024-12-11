@@ -11,7 +11,9 @@ set(SOURCES "src/data_reader.cpp"
             "src/barycentric_interpolator.cpp"
             "src/cubic_spline_interpolator.cpp"
             "src/chebychev_interpolator.cpp"
-            "src/plotter.cpp")
+            "src/plotter.cpp"
+            "src/fourier_approximator.cpp"
+            )
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
