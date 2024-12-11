@@ -15,6 +15,10 @@ set(SOURCES "src/data_reader.cpp"
             "src/fourier_approximator.cpp"
             )
 
+set(TEST_SOURCES "test/test_polynomial_interpolator.cpp"
+                 "test/test_lagrange_interpolator.cpp"
+                 "test/test_barycentric_interpolator.cpp")
+
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
 option(GIT_SUBMODULE "Check submodules during build" ON)
@@ -37,9 +41,7 @@ add_executable(main "src/main.cpp" ${SOURCES})
 
 # Define tests
 
-add_executable(tests
-                test/test_lagrange_interpolator.cpp
-                ${SOURCES})
+add_executable(tests ${TEST_SOURCES} ${SOURCES})
 target_link_libraries(tests gtest_main gtest pthread Boost::iostreams Boost::system Boost::filesystem)
 
 add_custom_target(test ./tests DEPENDS tests)
