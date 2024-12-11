@@ -1,11 +1,14 @@
+#pragma once
+
 #include <Eigen/Core>
 #include <fstream>
 #include <filesystem>
 #include <vector>
 #include <utility>
+#include <iostream>
 
-#ifndef DATAGEN_HPP 
-#define DATAGEN_HPP
+// #ifndef DATAGEN_HPP 
+// #define DATAGEN_HPP
 
 template <typename T>
 struct datagen {
@@ -43,4 +46,4 @@ struct datagen {
 
 };
 
-#endif
+// #endif

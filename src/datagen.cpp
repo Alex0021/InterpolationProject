@@ -1,5 +1,4 @@
 #include "datagen.hpp"
-#include <iostream>
 
 template <typename T>
 void datagen<T>::random_data(std::filesystem::path path, int n, int m) {
@@ -48,7 +47,7 @@ void datagen<T>::damped_cosine(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &para
     T a = params[0];
     T b = params[1];
     T c = params[2];
-    // y = a*(-b*x.cwisePow(2)).cwiseExp().cwiseProduct((c*x.array().cwiseCos()));
+    y = a*((-b*x.array().square()).exp()).matrix().cwiseProduct((c*x).array().cos().matrix());
     data.col(0) = x;
     data.col(1) = y;
 }
