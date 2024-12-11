@@ -93,6 +93,16 @@ class InterpolationProjectException: public CustomException {
                     : CustomException(msg) {} 
         };
 
+        class InvalidType: public CustomException
+        {
+            public:
+                InvalidType(const std::string& msg, const std::string& where)
+                    : CustomException(msg, where) {}
+
+                InvalidType(const std::string& msg)
+                    : CustomException(msg) {}
+        };
+
         class DivisionByZero: public CustomException {
 
             public:
