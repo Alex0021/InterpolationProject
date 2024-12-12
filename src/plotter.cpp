@@ -1,9 +1,7 @@
 #include "plotter.hpp"
 
 template <typename T>
-Plotter<T>::Plotter() {
-    this->gp << "plot \n";
-}
+Plotter<T>::Plotter() {}
 
 template <typename T>
 Plotter<T>::~Plotter() {
