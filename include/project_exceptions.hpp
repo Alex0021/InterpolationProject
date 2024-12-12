@@ -134,11 +134,38 @@ class PolynomialInterpolatorException: public InterpolationProjectException
  * 
  */
 class LagrangeInterpolatorException: public InterpolationProjectException
-{
-};
+{};
 
 class BarycentricInterpolatorException: public InterpolationProjectException
+{};
+
+class DataReaderException: public InterpolationProjectException
 {
+    public:
+
+        DataReaderException(const std::string& msg, const std::string& where)
+            : InterpolationProjectException(msg, where)
+        {};
+
+        DataReaderException(const std::string& msg)
+            : InterpolationProjectException(msg, "DataReader")
+        {};
+
+        class FileNotFound: public CustomException
+        {
+            public:
+                FileNotFound(const std::string& filepath) 
+                    : CustomException(std::format("Could not find the specified filepath! --> '{}'", filepath), "DataReader")
+                {};
+        };
+
+        class NotANumber: public CustomException
+        {
+            public:
+                NotANumber(const std::string& value_error)
+                    : CustomException(std::format("Numerical data expected for datapoints file! Found --> '{}'", value_error), "DataReader")
+                {};
+        };
 };
 
 #endif
