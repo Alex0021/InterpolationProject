@@ -17,7 +17,8 @@ set(SOURCES "src/data_reader.cpp"
 set(TEST_SOURCES "test/test_polynomial_interpolator.cpp"
                  "test/test_lagrange_interpolator.cpp"
                  "test/test_barycentric_interpolator.cpp"
-                 "test/test_cubic_spline_interpolator.cpp")
+                 "test/test_cubic_spline_interpolator.cpp"
+                 "test/test_data_reader.cpp")
 
 # Make sure git submodules are loaded #
 set(GIT_EXECUTABLE "git")    
