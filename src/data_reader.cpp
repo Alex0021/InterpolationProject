@@ -6,6 +6,7 @@
 #include <string>	
 #include <vector>
 #include <memory>
+#include <iostream>
 
 inline void check_path(const std::filesystem::path& path) 
 { std::filesystem::exists(path) ?  : throw DataReaderException::FileNotFound(path.c_str()); }
@@ -32,10 +33,12 @@ Eigen::MatrixX<T> DataReader<T>::read(std::ifstream &file) {
     const auto is_numeric = [](const std::string& s) {return !s.empty() && std::all_of(s.begin(), s.end(), [](const char c) { return std::isdigit(c); }); };
     
     file >> s;
-    if (!is_numeric(s)) { throw DataReaderException::NotANumber("Number of rows in .txt file not a number!"); }
+    if (s != "#") { throw DataReaderException("Parameter line does not start with #!"); }
+    file >> s;
+    if (!is_numeric(s)) { throw DataReaderException::NotANumber(s); }
     rows = std::atoi(s.data());
     file >> s;
-    if (!is_numeric(s)) { throw DataReaderException::NotANumber("Number of cols in .txt file not a number!"); }
+    if (!is_numeric(s)) { throw DataReaderException::NotANumber(s); }
     cols = std::atoi(s.data());
 
     Eigen::MatrixX<T> data(rows, cols);
@@ -72,6 +75,10 @@ std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> DataReader<T>::in
     // First line of the file should be interpolation scheme + params
     std::string interpolation_scheme;
     unsigned int fitting_dim;
+    // First character of line parameter should always be #
+    file >> interpolation_scheme;
+    if (interpolation_scheme != "#") { throw DataReaderException("Parameter line does not start with #!"); }
+    
     file >> interpolation_scheme;
     file >> fitting_dim;
     std::string line;
@@ -102,24 +109,48 @@ std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> DataReader<T>::in
             inter->fit(X, fitting_dim-1);
             return std::make_pair(std::move(inter), X);
     }
-    // if (interpolation_scheme == "CUBIC_SPLINE")
-    // {
-    //         // Check if any options provided
-    //         std::unique_ptr<CubicSplineInterpolator<T>> inter;
-    //         if (options.size() > 0)
-    //         {
-    //             inter = std::make_unique<CubicSplineInterpolator<T>>();
-    //         }
-    //         else 
-    //         {
-    //             inter = std::make_unique<CubicSplineInterpolator<T>>();
-    //         }
-    //         inter->fit(DataReader<T>::read(file), fitting_dim-1);
-    //         return std::make_pair(std::move(inter), X);
-    // }
+    if (interpolation_scheme == "CUBIC_SPLINE")
+    {
+            // Check if any options provided
+            if (std::is_same<T, int>::value) 
+            {
+                throw CubicSplineInterpolatorException::InvalidType("CubicSplineInterpolator doesn't support int type", __func__);
+            }
+            else
+            {
+                std::unique_ptr<CubicSplineInterpolator<T>> inter;
+                if (options.size() > 0)
+                {
+                    auto b_constraint = CubicSplineInterpolator<T>::get_constraint_from_string(options[0]);
+                    if (options.size() > 1)
+                    {
+                        if (options.size() < 3)
+                        {
+                            throw DataReaderException("Insufficiant number of parameters for cubic_spline with 'CLAMPED' boundaries! Should be 2", __func__);
+                        }
+                        // Reading special case for 'clamped' conditions
+                        std::stringstream ss(options[1].append(" ").append(options[2]));
+                        Eigen::Vector2<T> v;
+                        ss >> v(0);
+                        ss >> v(1);
+                        inter = std::make_unique<CubicSplineInterpolator<T>>(b_constraint, v);
+                    }
+                    else 
+                    {
+                        inter = std::make_unique<CubicSplineInterpolator<T>>(b_constraint);
+                    }
+                }
+                else 
+                {
+                    inter = std::make_unique<CubicSplineInterpolator<T>>();
+                }
+                inter->fit(X, fitting_dim-1);
+                return std::make_pair(std::move(inter), X);
+            }
+    }
     else
     {
-        throw std::runtime_error("Unknown interpolator type!");
+        throw DataReaderException("Unknown interpolator type!");
     }
 }
 
