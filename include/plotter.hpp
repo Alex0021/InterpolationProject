@@ -59,6 +59,12 @@ public:
     
     void plot(const Eigen::MatrixX2<T> &data, std::string title);
 
+    void plot_points(const Eigen::MatrixX2<T> &data, std::string title);
+
+    void plot_lines(const Eigen::MatrixX2<T> &data, std::string title);
+
+    void plot(int n, std::filesystem::path* paths, std::string* titles, std::string* styles);
+
     void plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data);
 
     void plot(const Eigen::MatrixX2<T> &point_data, const Eigen::MatrixX2<T> &line_data, std::string title);

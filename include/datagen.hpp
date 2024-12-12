@@ -28,6 +28,8 @@ struct datagen {
         UNIFORM,
     };
 
+    static void write(const std::filesystem::path path, const Eigen::MatrixX<T> &data);
+
     static void random_data(std::filesystem::path path, int n, int m);
 
     static void polynomial(Eigen::MatrixX<T> &data, Eigen::VectorX<T> &coeffs, std::vector<std::pair<T, T>> range, PointGeneration pg);

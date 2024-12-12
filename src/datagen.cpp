@@ -1,13 +1,17 @@
 #include "datagen.hpp"
 
 template <typename T>
-void datagen<T>::random_data(std::filesystem::path path, int n, int m) {
+void datagen<T>::write(const std::filesystem::path path, const Eigen::MatrixX<T> &data) {
     std::ofstream file(path);
-    std::cout << "Writing random data to " << path << std::endl;
-    Eigen::MatrixX<T> data = Eigen::MatrixX<T>::Random(n, m);
-    file << n << " " << m << std::endl;
+    file << "# " << data.rows() << " " << data.cols() << std::endl;
     file << data;
     file.close();
+}
+
+template <typename T>
+void datagen<T>::random_data(std::filesystem::path path, int n, int m) {
+    Eigen::MatrixX<T> data = Eigen::MatrixX<T>::Random(n, m);
+    datagen<T>::write(path, data);
 }
 
 template <typename T>
