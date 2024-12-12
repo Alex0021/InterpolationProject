@@ -3,7 +3,7 @@
 template <typename T>
 CubicSplineInterpolator<T>::CubicSplineInterpolator() {
     if (std::is_same<T, int>::value) {
-        throw CubicSplineInterpolatorException("CubicSplineInterpolator doesn't support int type", __func__);
+        throw CubicSplineInterpolatorException::InvalidType("CubicSplineInterpolator doesn't support int type", __func__);
     }
     boundary_constraint = BoundaryConstraint::NATURAL;
 }
@@ -69,7 +69,7 @@ void CubicSplineInterpolator<T>::fit(const Eigen::MatrixX<T>& X, unsigned int di
     }
 
     if (dim_idx >= m) {
-        throw CubicSplineInterpolatorException::IndexOutOfBounds("Ivalid dimension index", __func__);
+        throw CubicSplineInterpolatorException::IndexOutOfBounds(__func__);
     }
 
     if (m == 1) {
@@ -136,7 +136,7 @@ int CubicSplineInterpolator<T>::_get_index(T x)
     T xmax = this->_X_max(0);
 
     if (x < xmin || x > xmax) {
-        throw CubicSplineInterpolatorException::Extrapolation("Extrapolation not supported", __func__);
+        throw CubicSplineInterpolatorException::Extrapolation(x, xmin, xmax, __func__);
     }
 
     int n = this->_X_data.rows();
