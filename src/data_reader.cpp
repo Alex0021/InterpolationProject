@@ -1,13 +1,13 @@
 #include "data_reader.hpp"
 
 template <typename T>
-static Eigen::MatrixX<T> DataReader<T>::read(std::filesystem::path path) {
+Eigen::MatrixX<T> DataReader<T>::read(std::filesystem::path path) {
     std::ifstream file(path);
     return DataReader<T>::read(file);
 }
 
 template <typename T>
-static Eigen::MatrixX<T> DataReader<T>::read(std::ifstream &file) {
+Eigen::MatrixX<T> DataReader<T>::read(std::ifstream &file) {
     int rows, cols;
     file >> rows >> cols;
 
