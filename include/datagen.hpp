@@ -84,6 +84,10 @@ struct datagen {
     static void polynomial(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &coeffs, std::pair<T, T> range, PointGeneration pg);
     
     /**
+     */    
+    static void polynomial(Eigen::MatrixX2<T> &data, Eigen::VectorX<T> &coeffs, T shift, std::pair<T, T> range, PointGeneration pg);
+    
+    /**
      * @brief Helper function to generate a polynomial function of the specified coefficients and populate the data vector with the values.
      * 
      * @param data : The vector to populate with the polynomial values
