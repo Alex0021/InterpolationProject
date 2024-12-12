@@ -206,6 +206,7 @@ CubicSplineInterpolator<T>::BoundaryConstraint CubicSplineInterpolator<T>::get_c
 }
 
 // template class CubicSplineInterpolator<int>;
+template class CubicSplineInterpolator<long double>;
 template class CubicSplineInterpolator<double>;
 template class CubicSplineInterpolator<float>;
 // template class CubicSplineInterpolator<int>;

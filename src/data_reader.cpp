@@ -154,6 +154,7 @@ std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> DataReader<T>::in
     }
 }
 
+template class DataReader<long double>;
 template class DataReader<double>;
 template class DataReader<float>;
 template class DataReader<int>; 

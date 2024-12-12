@@ -66,3 +66,4 @@ std::pair<Eigen::VectorX<T>, Eigen::VectorX<T>> PolynomialInterpolator<T>::get_r
 template class PolynomialInterpolator<int>;
 template class PolynomialInterpolator<float>;
 template class PolynomialInterpolator<double>;
+template class PolynomialInterpolator<long double>;
