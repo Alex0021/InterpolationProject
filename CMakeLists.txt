@@ -48,7 +48,7 @@ add_custom_target(test ./tests DEPENDS tests)
 
 #GNU PLOT
 #find dependencies (Boost)
-find_package(Boost REQUIRED COMPONENTS iostreams system filesystem)
+find_package(Boost REQUIRED COMPONENTS iostreams system filesystem program_options)
 #adds the search path for includes
 include_directories(external/gnuplot-iostream)
 #adds linked libraries to produce executable
@@ -56,6 +56,7 @@ target_link_libraries(main PRIVATE
 Boost::iostreams
 Boost::system
 Boost::filesystem
+Boost::program_options
 )
 
 
