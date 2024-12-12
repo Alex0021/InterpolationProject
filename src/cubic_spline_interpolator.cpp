@@ -192,6 +192,20 @@ void CubicSplineInterpolator<T>::set_clamped_values(T lower, T upper) {
     this->clamped_values = Eigen::Vector2<T>(lower, upper);
 }
 
+template <typename T>
+CubicSplineInterpolator<T>::BoundaryConstraint CubicSplineInterpolator<T>::get_constraint_from_string(const std::string& b_constraint)
+{
+    const auto to_uppercase = [](std::string& s) {return std::transform(s.begin(), s.end(), s.begin(),
+                                                                        [](char c) {return std::toupper(c); }); };
+    std::string b_const_normalized(b_constraint);
+    to_uppercase(b_const_normalized);
+    if (b_const_normalized == "NATURAL") { return CubicSplineInterpolator<T>::BoundaryConstraint::NATURAL; }
+    if (b_const_normalized == "NOT_A_KNOT") { return CubicSplineInterpolator<T>::BoundaryConstraint::NOT_A_KNOT; }
+    if (b_const_normalized == "CLAMPED") { return CubicSplineInterpolator<T>::BoundaryConstraint::CLAMPED; }
+    else { throw CubicSplineInterpolatorException::InvalidType("Cannot convert to a known boundary condition!", __func__);}
+}
+
 // template class CubicSplineInterpolator<int>;
 template class CubicSplineInterpolator<double>;
 template class CubicSplineInterpolator<float>;
+// template class CubicSplineInterpolator<int>;

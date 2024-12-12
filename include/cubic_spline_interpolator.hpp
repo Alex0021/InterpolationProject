@@ -34,6 +34,8 @@ class CubicSplineInterpolator: public PolynomialInterpolator<T>
             NOT_A_KNOT,
             CLAMPED,
         };
+
+        static BoundaryConstraint get_constraint_from_string(const std::string& b_constraint);
     
     private:
         /**
