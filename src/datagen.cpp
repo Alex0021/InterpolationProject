@@ -1,13 +1,17 @@
 #include "datagen.hpp"
 
 template <typename T>
-void datagen<T>::random_data(std::filesystem::path path, int n, int m) {
+void datagen<T>::write(const std::filesystem::path path, const Eigen::MatrixX<T> &data) {
     std::ofstream file(path);
-    std::cout << "Writing random data to " << path << std::endl;
-    Eigen::MatrixX<T> data = Eigen::MatrixX<T>::Random(n, m);
-    file << n << " " << m << std::endl;
+    file << "# " << data.rows() << " " << data.cols() << std::endl;
     file << data;
     file.close();
+}
+
+template <typename T>
+void datagen<T>::random_data(std::filesystem::path path, int n, int m) {
+    Eigen::MatrixX<T> data = Eigen::MatrixX<T>::Random(n, m);
+    datagen<T>::write(path, data);
 }
 
 template <typename T>
@@ -75,8 +79,11 @@ void datagen<T>::chebyshev_points(Eigen::VectorX<T> &x, std::pair<T, T> range) {
     int n = x.rows();
     // TODO: verify this implementation
     for (int i = 0; i < n; i++) {
-        x[i] = 0.5*(range.first + range.second) + 0.5*(range.second - range.first)*cos(M_PI*(2*i + 1)/(2*n));
+        x(i) = cos((2*i+1)*M_PI/(2*n));
+        x(i) = 0.5*((range.second-range.first)*x(i) + range.second + range.first);
     }
 }
 
 template struct datagen<double>;
+template struct datagen<float>;
+template struct datagen<int>;

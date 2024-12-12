@@ -10,7 +10,6 @@ set(SOURCES "src/data_reader.cpp"
             "src/lagrange_interpolator.cpp"
             "src/barycentric_interpolator.cpp"
             "src/cubic_spline_interpolator.cpp"
-            "src/chebychev_interpolator.cpp"
             "src/plotter.cpp"
             "src/fourier_approximator.cpp"
 )

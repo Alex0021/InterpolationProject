@@ -168,4 +168,6 @@ class DataReaderException: public InterpolationProjectException
         };
 };
 
+class CubicSplineInterpolatorException: public InterpolationProjectException{};
+
 #endif
