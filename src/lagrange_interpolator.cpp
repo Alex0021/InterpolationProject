@@ -83,3 +83,4 @@ T LagrangeInterpolator<T>::operator()(T x)
 template class LagrangeInterpolator<int>;
 template class LagrangeInterpolator<float>;
 template class LagrangeInterpolator<double>;
+template class LagrangeInterpolator<long double>;

@@ -79,6 +79,7 @@ void Plotter<T>::reset() {
     this->gp << "plot ";
 }
 
+template class Plotter<long double>;
 template class Plotter<double>;
 template class Plotter<float>;
 template class Plotter<int>;

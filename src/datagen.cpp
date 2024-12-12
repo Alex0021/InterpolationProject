@@ -84,6 +84,7 @@ void datagen<T>::chebyshev_points(Eigen::VectorX<T> &x, std::pair<T, T> range) {
     }
 }
 
+template struct datagen<long double>;
 template struct datagen<double>;
 template struct datagen<float>;
 template struct datagen<int>;

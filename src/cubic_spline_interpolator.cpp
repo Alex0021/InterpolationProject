@@ -193,5 +193,6 @@ void CubicSplineInterpolator<T>::set_clamped_values(T lower, T upper) {
 }
 
 // template class CubicSplineInterpolator<int>;
+template class CubicSplineInterpolator<long double>;
 template class CubicSplineInterpolator<double>;
 template class CubicSplineInterpolator<float>;

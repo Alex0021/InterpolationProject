@@ -224,3 +224,4 @@ T BarycentricInterpolator<T>::operator()(T x)
 template class BarycentricInterpolator<int>;
 template class BarycentricInterpolator<float>;
 template class BarycentricInterpolator<double>;
+template class BarycentricInterpolator<long double>;
