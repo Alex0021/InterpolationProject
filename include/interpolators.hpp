@@ -2,4 +2,3 @@
 #include "barycentric_interpolator.hpp"
 #include "cubic_spline_interpolator.hpp"
 #include "fourier_approximator.hpp"
-#include "chebychev_interpolator.hpp"

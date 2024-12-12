@@ -94,29 +94,29 @@ std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> DataReader<T>::in
     {
             std::unique_ptr<LagrangeInterpolator<T>> inter(new LagrangeInterpolator<T>);
             inter->fit(X, fitting_dim-1);
-            return std::make_pair<std::unique_ptr<Interpolator<T>, Eigen::MatrixX<T>>(inter, X);
+            return std::make_pair(std::move(inter), X);
     }
     if (interpolation_scheme == "BARYCENTRIC")
     {
             std::unique_ptr<BarycentricInterpolator<T>> inter(new BarycentricInterpolator<T>);
             inter->fit(X, fitting_dim-1);
-            return std::make_pair<std::unique_ptr<Interpolator<T>, Eigen::MatrixX<T>>(inter, X);
+            return std::make_pair(std::move(inter), X);
     }
-    if (interpolation_scheme == "CUBIC_SPLINE")
-    {
-            // Check if any options provided
-            std::unique_ptr<CubicSplineInterpolator<T>> inter;
-            if (options.size() > 0)
-            {
-                inter = std::make_unique<CubicSplineInterpolator<T>>();
-            }
-            else 
-            {
-                inter = std::make_unique<CubicSplineInterpolator<T>>();
-            }
-            inter->fit(DataReader<T>::read(file), fitting_dim-1);
-            return std::make_pair<std::unique_ptr<Interpolator<T>, Eigen::MatrixX<T>>(inter, X);
-    }
+    // if (interpolation_scheme == "CUBIC_SPLINE")
+    // {
+    //         // Check if any options provided
+    //         std::unique_ptr<CubicSplineInterpolator<T>> inter;
+    //         if (options.size() > 0)
+    //         {
+    //             inter = std::make_unique<CubicSplineInterpolator<T>>();
+    //         }
+    //         else 
+    //         {
+    //             inter = std::make_unique<CubicSplineInterpolator<T>>();
+    //         }
+    //         inter->fit(DataReader<T>::read(file), fitting_dim-1);
+    //         return std::make_pair(std::move(inter), X);
+    // }
     else
     {
         throw std::runtime_error("Unknown interpolator type!");
