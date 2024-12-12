@@ -141,4 +141,6 @@ class BarycentricInterpolatorException: public InterpolationProjectException
 {
 };
 
+class CubicSplineInterpolatorException: public InterpolationProjectException{};
+
 #endif

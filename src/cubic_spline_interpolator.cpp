@@ -1,10 +1,9 @@
 #include "cubic_spline_interpolator.hpp"
-#include <iostream>
 
 template <typename T>
 CubicSplineInterpolator<T>::CubicSplineInterpolator() {
     if (std::is_same<T, int>::value) {
-        throw std::runtime_error("Invalid datatype for CubicSplineInterpolator");
+        throw CubicSplineInterpolatorException("CubicSplineInterpolator doesn't support int type", __func__);
     }
     boundary_constraint = BoundaryConstraint::NATURAL;
 }
@@ -55,7 +54,7 @@ void CubicSplineInterpolator<T>::_apply_boundary_conditions(Eigen::MatrixX<T> &A
         case BoundaryConstraint::NOT_A_KNOT:
 
         default:
-            throw std::runtime_error("Invalid boundary condition");
+            throw CubicSplineInterpolatorException::InvalidType("Invalid boundary condition", __func__);
     }
 }
 
@@ -66,15 +65,15 @@ void CubicSplineInterpolator<T>::fit(const Eigen::MatrixX<T>& X, unsigned int di
     n = X.rows();
     m = X.cols();
     if (m > 2) {
-        throw std::runtime_error("Multidimensional data not supported");
+        throw CubicSplineInterpolatorException::MultidimensionalImplementation("Multidimensional data not supported", __func__);
     }
 
     if (dim_idx >= m) {
-        throw std::runtime_error("Invalid dimension index");
+        throw CubicSplineInterpolatorException::IndexOutOfBounds("Ivalid dimension index", __func__);
     }
 
     if (m == 1) {
-        throw std::runtime_error("Single dimensional data not supported");
+        throw CubicSplineInterpolatorException::InterpolationProjectException("Single dimension data not supported", __func__);
     }
 
     Eigen::VectorX<T> y = X.col(dim_idx);
@@ -137,7 +136,7 @@ int CubicSplineInterpolator<T>::_get_index(T x)
     T xmax = this->_X_max(0);
 
     if (x < xmin || x > xmax) {
-        throw std::runtime_error("Value out of range");
+        throw CubicSplineInterpolatorException::Extrapolation("Extrapolation not supported", __func__);
     }
 
     int n = this->_X_data.rows();
@@ -164,7 +163,7 @@ template <typename T>
 Eigen::VectorX<T> CubicSplineInterpolator<T>::operator()(const Eigen::MatrixX<T>& X) 
 {
     if (X.cols() > 1) {
-        throw std::runtime_error("Multidimensional data not supported");
+        throw CubicSplineInterpolatorException::MultidimensionalImplementation("Multidimensional data not supported", __func__);
     }
 
     Eigen::VectorX<T> y = Eigen::VectorX<T>(X.rows());

@@ -2,7 +2,10 @@
 #define __CUBIC_SPLINE_INTERPOLATOR_INCLUDE
 
 #include "polynomial_interpolator.hpp"
+#include "project_exceptions.hpp"
+#include <iostream>
 #include <Eigen/LU>
+
 
 template <typename T>
 class CubicSplineInterpolator: public PolynomialInterpolator<T>
