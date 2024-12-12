@@ -14,8 +14,7 @@ class CubicSplineInterpolator: public PolynomialInterpolator<T>
         enum BoundaryConstraint {
             NATURAL,
             NOT_A_KNOT,
-            PERIODIC,
-            QUADRATIC
+            CLAMPED,
         };
     
     private:
@@ -28,7 +27,9 @@ class CubicSplineInterpolator: public PolynomialInterpolator<T>
 
         Eigen::MatrixX4<T> coefficients; // Coefficients of the cubic spline (a,b,c,d)
 
-        void _apply_boundary_conditions(Eigen::MatrixX<T> &A, Eigen::VectorX<T> &b);
+        Eigen::Vector2<T> clamped_values;
+
+        void _apply_boundary_conditions(Eigen::MatrixX<T> &A, Eigen::VectorX<T> &b, Eigen::VectorX<T> &f, Eigen::VectorX<T> &h);
 
         int _get_index(T x);
 
@@ -38,6 +39,8 @@ class CubicSplineInterpolator: public PolynomialInterpolator<T>
 
         CubicSplineInterpolator(BoundaryConstraint boundary);
 
+        CubicSplineInterpolator(BoundaryConstraint boundary, const Eigen::Vector2<T>& clamped_values);
+
         void fit(const Eigen::MatrixX<T>& X, unsigned int dim_idx) override;
 
         void fit(const Eigen::VectorX<T>& X, const Eigen::VectorX<T>& y);
@@ -45,6 +48,10 @@ class CubicSplineInterpolator: public PolynomialInterpolator<T>
         Eigen::VectorX<T> operator()(const Eigen::MatrixX<T>& X) override;
 
         T operator()(T x) override;
+
+        void set_clamped_values(const Eigen::Vector2<T>& clamped_values);
+        
+        void set_clamped_values(T low, T high);
 
 };
 
