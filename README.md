@@ -15,6 +15,10 @@ This project provides various interpolation methods and utilities. It includes c
 - build/: Directory where the project is built (not included in the repository).
 ```
 
+<p align="center">
+    <img src="images/InterpolationProjectUML.svg" alt="UML diagram" width="800">
+</p>
+
 ## Prerequisites
 
 - C++20 or later
