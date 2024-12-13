@@ -129,6 +129,12 @@ int main(int argc, char **argv) {
         return 0;
     }
 
+    // Create output folder if needed
+    if (!std::filesystem::exists(OUTPUT_FOLDER))
+    {
+        std::filesystem::create_directory(OUTPUT_FOLDER);
+    }
+
     std::filesystem::path data_path = std::filesystem::current_path().concat("/").concat(DEFAULT_DATAFILE_PATH);
     if (vmap.count("file")) {
         data_path = std::filesystem::current_path().concat("/").concat(vmap["file"].as<std::string>());
