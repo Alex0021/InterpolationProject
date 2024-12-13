@@ -42,7 +42,6 @@ add_executable(InterpolationProject "src/app.cpp" ${SOURCES})
 
 # Set the output directory for main program
 set_target_properties(InterpolationProject PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
-add_executable(generate_plots "src/generate_plots.cpp" ${SOURCES})
 
 # Define tests
 add_executable(tests ${TEST_SOURCES} ${SOURCES})
