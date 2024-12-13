@@ -38,7 +38,10 @@ add_subdirectory(external/googletest)
 include_directories(external/eigen include/ external/gnu-iostream)
 
 # Define targets
-add_executable(main "src/app.cpp" ${SOURCES})
+add_executable(InterpolationProject "src/app.cpp" ${SOURCES})
+
+# Set the output directory for main program
+set_target_properties(InterpolationProject PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR})
 
 # Define tests
 add_executable(tests ${TEST_SOURCES} ${SOURCES})
@@ -52,7 +55,7 @@ find_package(Boost REQUIRED COMPONENTS iostreams system filesystem program_optio
 #adds the search path for includes
 include_directories(external/gnuplot-iostream)
 #adds linked libraries to produce executable
-target_link_libraries(main PRIVATE
+target_link_libraries(InterpolationProject PRIVATE
 Boost::iostreams
 Boost::system
 Boost::filesystem

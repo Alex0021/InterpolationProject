@@ -34,12 +34,16 @@
 # CMake
 build/
 
+#Executable
+InterpolationProject
+
 # VSCode
 .vscode/
 *.code-workspace
 
 # Data
-data/
+data/*
+output/*
 
 docs/
 *.DS_Store
