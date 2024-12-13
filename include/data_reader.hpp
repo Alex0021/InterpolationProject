@@ -44,6 +44,6 @@ struct DataReader {
      * @param path filepath
      * @return Interpolator<T> the requested interpolator object 
      */
-    static std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> interpolator_from_file(const std::filesystem::path& path);
+    static std::unique_ptr<Interpolator<T>> interpolator_from_file(const std::filesystem::path& path, const std::string& interpolator, std::vector<std::string>& options, const int fitting_dim);
 
 };

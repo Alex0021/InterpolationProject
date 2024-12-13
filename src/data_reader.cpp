@@ -60,54 +60,27 @@ Eigen::MatrixX<T> DataReader<T>::read(std::ifstream &file) {
 }
 
 template <typename T>
-std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> DataReader<T>::interpolator_from_file(const std::filesystem::path& path)
+std::unique_ptr<Interpolator<T>> DataReader<T>::interpolator_from_file(const std::filesystem::path& path, const std::string& interpolator, std::vector<std::string>& options, const int fitting_dim)
 {
-    // Check if file exists
-    check_path(path);
-
-    std::ifstream file(path);
-    // Verify file is opened
-    if (!file.is_open()) 
-    {
-        throw std::runtime_error(std::format("[reader] :: The provided file could not be opened! --> '{}'", path.c_str()));
-    }
-
-    // First line of the file should be interpolation scheme + params
-    std::string interpolation_scheme;
-    unsigned int fitting_dim;
-    // First character of line parameter should always be #
-    file >> interpolation_scheme;
-    if (interpolation_scheme != "#") { throw DataReaderException("Parameter line does not start with #!"); }
-    
-    file >> interpolation_scheme;
-    file >> fitting_dim;
-    std::string line;
-    // Retrieve remaining of the 1st line
-    std::getline(file, line);
-    std::stringstream ss_line(line);
-    // Create array of options
-    std::vector<std::string> options;
-    std::string op;
-    while(ss_line >> op) { options.push_back(op); }
-
     // Read data
-    Eigen::MatrixX<T> X = DataReader<T>::read(file);
+    Eigen::MatrixX<T> X = DataReader<T>::read(path);
 
     // Construct interpolator object
+    std::string interpolation_scheme = interpolator;
     const auto to_uppercase = [](std::string& s) {return std::transform(s.begin(), s.end(), s.begin(),
                                                                                 [](char c) {return std::toupper(c); }); };
     to_uppercase(interpolation_scheme);
     if (interpolation_scheme == "LAGRANGE")
     {
             std::unique_ptr<LagrangeInterpolator<T>> inter(new LagrangeInterpolator<T>);
-            inter->fit(X, fitting_dim-1);
-            return std::make_pair(std::move(inter), X);
+            inter->fit(X, fitting_dim);
+            return inter;
     }
     if (interpolation_scheme == "BARYCENTRIC")
     {
             std::unique_ptr<BarycentricInterpolator<T>> inter(new BarycentricInterpolator<T>);
-            inter->fit(X, fitting_dim-1);
-            return std::make_pair(std::move(inter), X);
+            inter->fit(X, fitting_dim);
+            return inter;
     }
     if (interpolation_scheme == "CUBIC_SPLINE")
     {
@@ -144,8 +117,8 @@ std::pair<std::unique_ptr<Interpolator<T>>, Eigen::MatrixX<T>> DataReader<T>::in
                 {
                     inter = std::make_unique<CubicSplineInterpolator<T>>();
                 }
-                inter->fit(X, fitting_dim-1);
-                return std::make_pair(std::move(inter), X);
+                inter->fit(X, fitting_dim);
+                return inter;
             }
     }
     else
