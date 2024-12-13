@@ -63,7 +63,7 @@ To compile the project, follow these steps:
 
 4. Build the project:
     ```sh
-    make
+    make InterpolationProject
     ```
 
 ## Running the Project
