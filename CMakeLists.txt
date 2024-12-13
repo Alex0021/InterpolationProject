@@ -38,7 +38,7 @@ add_subdirectory(external/googletest)
 include_directories(external/eigen include/ external/gnu-iostream)
 
 # Define targets
-add_executable(main "src/main.cpp" ${SOURCES})
+add_executable(main "src/app.cpp" ${SOURCES})
 
 # Define tests
 add_executable(tests ${TEST_SOURCES} ${SOURCES})
