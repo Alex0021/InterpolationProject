@@ -157,8 +157,7 @@ int main(int argc, char **argv) {
     if (vmap.empty())
     {
         std::vector<std::string> options= {};
-        // generate_plot_with_factory(data_path, "lagrange", options, 1);
-        test_damped_cosine_cubic();
+        generate_plot_with_factory(data_path, "lagrange", options, 1, num_samples);
         return 0;
     }
 }
