@@ -8,8 +8,9 @@
 #include <memory>
 #include "datagen.hpp"
 
-#define DEFAULT_DATAFOLDER_PATH "../datapoints/"
-#define DEFAULT_DATAFILE_PATH "../datapoints/default.txt"
+#define DEFAULT_DATAFOLDER_PATH "./datapoints/"
+#define DEFAULT_DATAFILE_PATH "./datapoints/default.txt"
+#define OUTPUT_FOLDER "./output/"
 #define DEFAULT_NUM_POINTS 100
 
 void interpolate_data_from_file(const std::filesystem::path& filepath);
@@ -33,13 +34,12 @@ void plot_multiple_interpolators(const std::filesystem::path& filepath, const st
     X_inter.col(0) = Eigen::VectorX<T>::LinSpaced(DEFAULT_NUM_POINTS,X.minCoeff(),X.maxCoeff());
 
     // Configure the plot
-    std::string path = "../output/";
     std::filesystem::path paths[interpolators.size()+1];
     paths[0] = filepath;
     datagen<T>::write(paths[0], X);
     for (int i = 1; i < interpolators.size()+1; i++)
     {
-       paths[i] = path + interpolators[i-1] + "_interpolated.txt";
+       paths[i] = OUTPUT_FOLDER + interpolators[i-1] + "_interpolated.txt";
         X_inter.col(1) = (*interpolator_objects[i-1])(X_inter.col(0));
         datagen<T>::write(paths[i], X_inter);
     }
@@ -96,6 +96,11 @@ int main(int argc, char **argv) {
         return -1;
     }
 
+    // Create the needed output folder if necessary
+    if (!std::filesystem::exists(OUTPUT_FOLDER)) {
+        std::filesystem::create_directory(OUTPUT_FOLDER);
+    }
+
     if (vmap.count("help"))
     {
         std::cout << desc << std::endl;
@@ -142,7 +147,7 @@ void generate_plot_with_factory(const std::filesystem::path& filepath, const std
     X_inter.col(1) = (*interpolator)(X_inter.col(0));
 
     // Configure the plot
-    std::string path = "../output/";
+    std::string path = OUTPUT_FOLDER;
     std::filesystem::path paths[2] = {path+"default_data.txt", path+"default_interpolated.txt"};
     datagen<double>::write(paths[0], X);    
     datagen<double>::write(paths[1], X_inter);
