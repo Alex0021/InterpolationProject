@@ -84,7 +84,7 @@ void generate_plot_with_factory(const std::filesystem::path& filepath, const std
     X_inter.col(1) = (*interpolator)(X_inter.col(0));
 
     // Configure the plot
-    std::string path = "../output/";
+    std::string path = OUTPUT_FOLDER;
     std::filesystem::path paths[2] = {path+"default_data.txt", path+"default_interpolated.txt"};
     datagen<double>::write(paths[0], X);    
     datagen<double>::write(paths[1], X_inter);
