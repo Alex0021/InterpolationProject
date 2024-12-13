@@ -8,9 +8,27 @@ This project provides various interpolation methods and utilities. It includes c
 
 - C++20 or later
 - CMake 3.10 or later
-- GoogleTest
 - Doxygen 1.8.20 or later
 - Boost 1.75.0 or later
+
+Make sure these dependencies are satisfied before building the project!
+
+**Be carefull** with the Doxygen used for the documentation, it requires the `dot` package from `graphviz` in order to display
+class dependency diagrams on the html doc website.
+
+Furthurmore, some equations have been added to some functions descriptions, which requires a **full** install of `latex`. 
+However, this **will not** cause documentatin to fail generating.
+
+To install `graphviz`
+```sh
+sudo apt-get install graphviz
+```
+
+To install `latex` with all required dependencies:
+```sh
+sudo apt-get install texlive-full
+```
+
 
 ## Compilation
 
@@ -38,7 +56,9 @@ To compile the project, follow these steps:
     make
     ```
 
-## Running the Project with Command line arguments
+## Running the Project
+
+
 
 To run the project, execute the following command from the build directory (everything end up to default):
 ```sh
@@ -57,17 +77,17 @@ The project supports various command line arguments to plot data from files usin
 
 To plot data using Lagrange interpolation:
 ```sh
-./InterpolationProject --file data.txt --lagrange
+./InterpolationProject --file datapoints/default.txt --lagrange
 ```
 
 To plot data using cubic spline interpolation with natural boundary conditions:
 ```sh
-./InterpolationProject --file data.txt --cubic_spline NATURAL
+./InterpolationProject --file datapoints/default.txt --cubic_spline natural
 ```
 
 To plot data using multiple interpolators:
 ```sh
-./InterpolationProject --file data.txt --lagrange --barycentric --cubic_spline NATURAL
+./InterpolationProject --file datapoints/default.txt --lagrange --barycentric --cubic_spline natural
 ```
 
 ## Running Tests
