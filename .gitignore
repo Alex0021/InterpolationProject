@@ -36,6 +36,7 @@ build/
 
 #Executable
 InterpolationProject
+src/generated_plots.cpp
 
 # VSCode
 .vscode/
