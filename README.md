@@ -68,7 +68,7 @@ To compile the project, follow these steps:
 
 ## Running the Project
 
-To run the project, execute the following command from the build directory (everything end up to default):
+To run the project, execute the following command **from the root directory** (the cloned repo).
 ```sh
 ./InterpolationProject
 ```
